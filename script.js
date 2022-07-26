@@ -16,12 +16,8 @@ const currentProgressTag = document.getElementById('currentProgress');
 for(let i=0;i<tracks.length;i++){
     const trackTag = document.createElement("div");
     trackTag.addEventListener("click",()=>{
-        const trackId  = tracks[i].trackId;
-        audioTag.src = trackId;
-        audioTag.play();
-        isPlaying = true;
-        updatePlayAndPauseButton();
         currentPlayingIndex = i;
+        playSong();
     })
     trackTag.classList.add("trackItem");
     const title = (i+1).toString() + "." +tracks[i].title;
@@ -59,11 +55,7 @@ playButtonTag.addEventListener("click",()=>{
     const CurrentTime = Math.floor(audioTag.currentTime);
     isPlaying = true;
     if(CurrentTime === 0){
-        const songIdToPlay = tracks[currentPlayingIndex].trackId;
-        audioTag.src =songIdToPlay;
-        audioTag.play();
-        
-        updatePlayAndPauseButton();
+       playSong();
     }else{
         audioTag.play();
         updatePlayAndPauseButton();
@@ -89,20 +81,20 @@ previousButtonTag.addEventListener("click",()=>{
         return;
     }
     currentPlayingIndex -=1;
-    const songIdToPlay = tracks[currentPlayingIndex].trackId;
-    audioTag.src = songIdToPlay;
-    audioTag.play();
-    isPlaying = true;
-    updatePlayAndPauseButton();
+    playSong();
 })
 nextButtonTag.addEventListener("click",()=>{
     if(currentPlayingIndex === tracks.length-1){
         return;
     }
     currentPlayingIndex +=1;
+    playSong();
+})
+const playSong = ()=>{
     const songIdToPlay = tracks[currentPlayingIndex].trackId;
     audioTag.src = songIdToPlay;
     audioTag.play();
     isPlaying = true;
     updatePlayAndPauseButton();
-})
+
+}
